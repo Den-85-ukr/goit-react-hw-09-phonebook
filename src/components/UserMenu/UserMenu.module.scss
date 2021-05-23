@@ -1,0 +1,27 @@
+.UserMenu {
+  display: flex;
+  align-items: center;
+}
+//   avatar: {
+//     marginRight: 4,
+//   },
+.email {
+  font-weight: 700;
+  margin-right: 12px;
+}
+
+.btn {
+  padding:5px 20px;
+  background:#35c1f8;
+  color:#fff;
+  border:none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:focus,
+  &:hover {
+    background-color: rgba(0, 113, 240, 0.7);
+    color: lightgoldenrodyellow;
+  }
+}
