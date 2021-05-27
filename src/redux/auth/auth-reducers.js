@@ -26,6 +26,7 @@ const token = createReducer(null, {
 });
 
 const setError = (_, { payload }) => payload;
+
 const error = createReducer(null, {
   [registerError]: setError,
   [loginError]: setError,
