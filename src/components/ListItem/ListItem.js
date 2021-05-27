@@ -1,25 +1,23 @@
-import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './ListItem.module.scss';
 
-class ListItem extends Component {
-  render() {
-    const { name, number, onDeleteItem, id } = this.props;
-    const handleDelete = () => onDeleteItem(id);
-
-    return (
-      <li>
-        <span className={styles.contact}>
-          {name}: {number}
-        </span>
-        <button onClick={handleDelete} type="button">
-          Delete
-        </button>
-      </li>
-    );
-    }
+const ListItem = ({ name, number, onDeleteItem, id }) => {
+  const handleDelete = () => {
+    onDeleteItem(id);
+  };
+  return (
+    <li>
+      <span className={styles.contact}>
+        {name}: {number}
+      </span>
+      <button onClick={handleDelete} type="button">
+        Delete
+      </button>
+    </li>
+  );
 };
+
 
 ListItem.propTypes = {
   name: PropTypes.string.isRequired,

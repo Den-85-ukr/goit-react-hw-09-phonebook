@@ -1,95 +1,93 @@
-import { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { register } from '../redux/auth';
 
 import styles from './pages.module.scss';
 
-class RegisterPage extends Component {
-  state = {
-    name: '',
-    email: '',
-    password: '',
+export default function RegisterPage() {
+  const dispatch = useDispatch();
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'email':
+        setEmail(value);
+        break;
+
+      case 'password':
+        setPassword(value);
+        break;
+
+      default:
+        throw new Error('ERROR');
+    }
   };
 
-  handleChange = event => {
-    const { name, value } = event.currentTarget;
-    this.setState({ [name]: value });
-  };
-
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    this.props.onRegister(this.state);
-
-    this.resetForm();
+    dispatch(register({ name, email, password }));
+    resetForm();
   };
 
-  resetForm = () => {
-    this.setState({ name: '', email: '', password: '' });
+  const resetForm = () => {
+    setName('');
+    setEmail('');
+    setPassword('');
   };
 
-  render() {
-    const { name, email, password } = this.state;
+  return (
+    <div className={styles.Page}>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <div>
+          <label>
+            Name
+            <input
+              autoComplete="off"              
+              name="name"
+              type="text"
+              value={name}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
 
-    return (
-      <div className={styles.Page}>
-        <form onSubmit={this.handleSubmit} className={styles.form}>
-          <div className={styles.form__group}>
-            <label className={styles.form__label}>
-              Name
-              <input
-                autoComplete="off"
-                className={styles.form__input}
-                name="name"
-                type="text"
-                value={name}
-                onChange={this.handleChange}
-              />
-            </label>
-          </div>
+        <div>
+          <label>
+            Email
+            <input
+              autoComplete="off"              
+              name="email"
+              type="email"
+              value={email}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Password
+            <input
+              name="password"
+              type="password"
+              value={password}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
 
-          <div className={styles.form__group}>
-            <label className={styles.form__label}>
-              Email
-              <input
-                autoComplete="off"
-                className={styles.form__input}
-                name="email"
-                type="email"
-                value={email}
-                onChange={this.handleChange}
-              />
-            </label>
-          </div>
-          <div className={styles.form__group}>
-            <label className={styles.form__label}>
-              Password
-              <input
-                className={styles.form__input}
-                name="password"
-                type="password"
-                value={password}
-                onChange={this.handleChange}
-              />
-            </label>
-          </div>
-
-          <button className={styles.form__btn} type="submit">
-            Register me!
-          </button>
-        </form>
-      </div>
-    );
-  }
-}
-
-RegisterPage.propTypes = {
-  onRegister: PropTypes.func.isRequired,
+        <button type="submit">
+          Register me!
+        </button>
+      </form>
+    </div>
+  );
 };
-
-const mapDispatchToProps = {
-  onRegister: register,
-};
-
-export default connect(null, mapDispatchToProps)(RegisterPage);

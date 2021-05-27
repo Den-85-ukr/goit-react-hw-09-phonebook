@@ -1,39 +1,52 @@
-import { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { login } from '../redux/auth';
 
 import styles from './pages.module.scss';
 
-class LoginPage extends Component {
-  state = {
-    email: '',
-    password: '',
+export default function LoginPage() {
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+
+    switch (name) {
+      case 'email':
+        setEmail(value);
+        break;
+
+      case 'password':
+        setPassword(value);
+        break;
+
+      default:
+        throw new Error('ERROR');
+    }
   };
 
-  handleChange = e => {
-    const { name, value } = e.currentTarget;
-    this.setState({ [name]: value });
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    const credentials = { email, password };
+
+    dispatch(login(credentials));
+
+    resetForm();
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-
-    this.props.onLogin(this.state);
-
-    this.resetForm();
+  const resetForm = () => {
+    setEmail('');
+    setPassword('');
   };
 
-  resetForm = () => {
-    this.setState({ email: '', password: '' });
-  };
-
-  render() {
-    const { email, password } = this.state;
+  
     return (
       <div className={styles.Page}>
-        <form onSubmit={this.handleSubmit} className={styles.form}>
+        <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.form__group}>
             <label className={styles.form__label}>
               Email
@@ -42,7 +55,7 @@ class LoginPage extends Component {
                 name="email"
                 type="email"
                 value={email}
-                onChange={this.handleChange}
+                onChange={handleChange}
                 placeholder=" "
                 className={styles.form__input}
               />
@@ -56,7 +69,7 @@ class LoginPage extends Component {
                 name="password"
                 type="password"
                 value={password}
-                onChange={this.handleChange}
+                onChange={handleChange}
                 placeholder=" "
                 className={styles.form__input}
               />
@@ -69,15 +82,5 @@ class LoginPage extends Component {
         </form>
       </div>
     );
-  }
-}
-
-LoginPage.propTypes = {
-  onLogin: PropTypes.func.isRequired,
+  
 };
-
-const mapDispatchToProps = {
-  onLogin: login,
-};
-
-export default connect(null, mapDispatchToProps)(LoginPage);

@@ -1,6 +1,4 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { useSelector, useDispatch } from 'react-redux';
 
 import contactSelectors from '../../redux/contact/contact-selectors';
 import contactOperations from '../../redux/contact/contact-operations';
@@ -8,48 +6,67 @@ import ListItem from "../ListItem";
 
 import styles from "./ContactList.module.scss";
 
-class ContactList extends Component {
+export default function ContactList() {
+  const dispatch = useDispatch();
+  const contacts = useSelector(contactSelectors.getVisibleContact);
 
-  componentDidMount() {
-    this.props.fetchContacts();    
-  }
+  const onDeleteContact = contactId =>
+    dispatch(contactOperations.deleteContact(contactId));
 
-  render() {
-    const { contacts, onDeleteContact } = this.props;
-
-    return (
-      <ul className={styles.phoneBookList}>
-        {contacts.map(({ id, name, number }) => {
-          return (
-            <ListItem
-              key={id}
-              id={id}
-              name={name}
-              number={number}
-              onDeleteItem={onDeleteContact}
-            />
-          );
-        })}
-      </ul>
-    );
-  }
+  return (
+    <ul className={styles.phoneBookList}>
+      {contacts.map(({ id, name, number }) => {
+        return (
+          <ListItem
+            key={id}
+            id={id}
+            name={name}
+            number={number}
+            onDeleteItem={onDeleteContact}
+          />
+        );
+      })}
+    </ul>
+  );
 };
 
-ContactList.propTypes = {
-  fetchContacts: PropTypes.func.isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
-  // contacts: PropTypes.arrayOf.isRequired,
-};
+// class ContactList extends Component {
 
-const mapStateToProps = state => {
-  return {
-    contacts: contactSelectors.getVisibleContact(state),
-  };
-};
+//   componentDidMount() {
+//     this.props.fetchContacts();    
+//   }
 
-const mapDispatchToProps = (dispatch) => ({
-    fetchContacts: () => dispatch(contactOperations.fetchContacts()),
-    onDeleteContact: id => dispatch(contactOperations.deleteContact(id)),
-});
+//   render() {
+//     const { contacts, onDeleteContact } = this.props;
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
+//     return (
+//       <ul className={styles.phoneBookList}>
+//         {contacts.map(({ id, name, number }) => {
+//           return (
+//             <ListItem
+//               key={id}
+//               id={id}
+//               name={name}
+//               number={number}
+//               onDeleteItem={onDeleteContact}
+//             />
+//           );
+//         })}
+//       </ul>
+//     );
+//   }
+// };
+
+
+// const mapStateToProps = state => {
+//   return {
+//     contacts: contactSelectors.getVisibleContact(state),
+//   };
+// };
+
+// const mapDispatchToProps = (dispatch) => ({
+//     fetchContacts: () => dispatch(contactOperations.fetchContacts()),
+//     onDeleteContact: id => dispatch(contactOperations.deleteContact(id)),
+// });
+
+// export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

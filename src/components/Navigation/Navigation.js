@@ -11,7 +11,7 @@ const Navigation = ({ isAuthenticated }) => (
     <NavLink
       exact
       className={styles.Navigation}
-      activeStyle={{ color: 'powderblue' }}
+      activeStyle={{ color: 'blueviolet' }}
       to={routes.home}
     >
       Home
@@ -19,7 +19,7 @@ const Navigation = ({ isAuthenticated }) => (
     {isAuthenticated && (
       <NavLink
         className={styles.Navigation}
-        activeStyle={{ color: 'powderblue' }}
+        activeStyle={{ color: 'blueviolet' }}
         to={routes.contacts}
       >
         Contacts{' '}
