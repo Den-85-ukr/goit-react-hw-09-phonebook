@@ -21,13 +21,3 @@ export default function UserMenu() {
     </div>
   );
 }; 
-
-// const mapStateToProps = state => ({
-//   email: getUserEmail(state),
-// });
-
-// const mapDispatchToProps = {
-//   onLogout: logout,
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);

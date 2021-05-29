@@ -18,9 +18,3 @@ export default function AppBar() {
     </div>
   );
 };
-  
-// const mapStateToProps = state => ({
-//   isAuthenticated: getIsAuthenticated(state),
-// });
-
-//export default connect(mapStateToProps)(AppBar);

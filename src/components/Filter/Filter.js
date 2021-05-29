@@ -24,16 +24,4 @@ export default function Filter() {
         />
       </label>
     );
-}
-
-
-// const mapStateToProps = state => ({
-//   filter: contactSelectors.getFilter(state),
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   onChange: event =>
-//     dispatch(contactActions.changeFilter(event.currentTarget.value)),
-// });
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+};
