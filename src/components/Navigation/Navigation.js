@@ -9,7 +9,7 @@ import { getIsAuthenticated } from '../../redux/auth';
 import styles from './Navigation.module.scss';
 
 export default function Navigation() {
-  const isAuthenticated = useSelector(getIsAuthenticated);
+  const isLoggedIn = useSelector(getIsAuthenticated);
   const location = useLocation();
   const history = useHistory();
   const refPageContacts = useRef(location.pathname);
@@ -27,7 +27,7 @@ export default function Navigation() {
     >
       Home
     </NavLink>
-    {isAuthenticated && (
+    {isLoggedIn && (
       <NavLink
         className={styles.Navigation}
         activeStyle={{ color: 'blueviolet' }}
